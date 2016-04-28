@@ -5,9 +5,9 @@
 #define offset 10000
 #define eps 1e-8
 #define PI 3.14159265358979323846//acos(-1.0)
-//åˆ¤æ–­ä¸€ä¸ªæ•°æ˜¯å¦ä¸º0,æ˜¯åˆ™è¿”å›true,å¦åˆ™è¿”å›false
+//ÅĞ¶ÏÒ»¸öÊıÊÇ·ñÎª0,ÊÇÔò·µ»Øtrue,·ñÔò·µ»Øfalse
 #define zero(x)(((x)>0?(x):-(x))<eps)
-//è¿”å›ä¸€ä¸ªæ•°çš„ç¬¦å·ï¼Œæ­£æ•°è¿”å›1ï¼Œè´Ÿæ•°è¿”å›2ï¼Œå¦åˆ™è¿”å›0
+//·µ»ØÒ»¸öÊıµÄ·ûºÅ£¬ÕıÊı·µ»Ø1£¬¸ºÊı·µ»Ø2£¬·ñÔò·µ»Ø0
 #define _sign(x)((x)>eps?1:((x)<-eps?2:0))
 
 namespace chis {
@@ -21,75 +21,75 @@ namespace chis {
 		Vector2d() :x(0), y(0) {}
 		Vector2d(const real x, const real y) :x(x), y(y) {}
 		/// Adds the given vector to this.
-		/// åŠ ä¸Šç»™å®šå‘é‡ã€‚
+		/// ¼ÓÉÏ¸ø¶¨ÏòÁ¿¡£
 		void operator+=(const Vector2d &v) {
 			x += v.x;
 			y += v.y;
 		}
 		/// Subtracts the given vector from this.
-		/// å‡å»ç»™å®šå‘é‡ã€‚
+		/// ¼õÈ¥¸ø¶¨ÏòÁ¿¡£
 		void operator-=(const Vector2d &v) {
 			x -= v.x;
 			y -= v.y;
 		}
 		/// Adds the given vecto to this, scaled by the given amount.
-		/// åŠ ä¸Šä¸€ä¸ªä»¥ç»™å®šæ¯”ä¾‹ç¼©æ”¾çš„å‘é‡ã€‚
+		/// ¼ÓÉÏÒ»¸öÒÔ¸ø¶¨±ÈÀıËõ·ÅµÄÏòÁ¿¡£
 		void add_scaled_vector(const Vector2d &v, real scale) {
 			x += v.x * scale;
 			y += v.y * scale;
 		}
 		/// Calculates and returns a component-wise product of this
 		//  vector with the given vector.
-		//  è®¡ç®—å¹¶è¿”å›ä¸ç»™å®šå‘é‡çš„åˆ†é‡ç§¯çš„æ‹·è´ã€‚
+		//  ¼ÆËã²¢·µ»ØÓë¸ø¶¨ÏòÁ¿µÄ·ÖÁ¿»ıµÄ¿½±´¡£
 		Vector2d component_product(const Vector2d &v) const {
 			return Vector2d(v.x*x, v.y*y);
 		}
 		/// Perform a [component-wise product] with the given vector and
 		//  set this vector to its result.
-		//  ä¸ç»™å®šå‘é‡è¿›è¡Œ[åˆ†é‡ç§¯]è¿ç®—ã€‚
+		//  Óë¸ø¶¨ÏòÁ¿½øĞĞ[·ÖÁ¿»ı]ÔËËã¡£
 		void component_product_update(const Vector2d &v) {
 			x *= v.x;
 			y *= v.y;
 		}
 		/// Calculates and returns the scalar product of this vector
 		//  with the given vector..
-		//  æ±‚ç‚¹ç§¯(å†…ç§¯[inner product])å¹¶è¿”å›
+		//  Çóµã»ı(ÄÚ»ı[inner product])²¢·µ»Ø
 		real scalar_product(const Vector2d &v) const {
 			return x*v.x + y*v.y;
 		}
 		/**
-		* a.b = |a||b|*cosÎ¸
-		* Î¸ = arccos((a.b)/(|a||b|))
+		* a.b = |a||b|*cos¦È
+		* ¦È = arccos((a.b)/(|a||b|))
 		**/
 		/// Calculates and returns the scalar product of this vector
 		//  with the given vector.
-		//  æ±‚ç‚¹ç§¯(å†…ç§¯[inner product])å¹¶è¿”å›
+		//  Çóµã»ı(ÄÚ»ı[inner product])²¢·µ»Ø
 		real operator*(const Vector2d &v) const {
 			return x*v.x + y*v.y;
 		}
 		/// Multiplies this vector by the givenn scalar
-		/// ç”±ç»™å®šçš„æ ‡é‡ä¹˜ä»¥è¯¥å‘é‡ã€‚
+		/// ÓÉ¸ø¶¨µÄ±êÁ¿³ËÒÔ¸ÃÏòÁ¿¡£
 		void operator*=(const real value) {
 			x *= value;
 			y *= value;
-		}
+		}                                                                   
 		/// Returns a copy of this vector scaled to the given value.
-		/// è¿”å›è¯¥å‘é‡ä¸ç»™å®šçš„æ ‡é‡çš„ä¹˜ç§¯çš„æ‹·è´ã€‚
+		/// ·µ»Ø¸ÃÏòÁ¿Óë¸ø¶¨µÄ±êÁ¿µÄ³Ë»ıµÄ¿½±´¡£
 		Vector2d operator*(const real value) const {
 			return Vector2d(x*value, y*value);
 		}
 		/// Gets the magnitude of this vector.
-		/// è·å–æ­¤å‘é‡çš„æ¨¡ã€‚
+		/// »ñÈ¡´ËÏòÁ¿µÄÄ£¡£
 		real magnitude() const {
 			return std::sqrt(x*x +y*y);
 		}
 		/// Gets the squared magnitude of this vector.
-		/// è·å–æ­¤å‘é‡çš„å¹³æ–¹å¤§å°ã€‚
+		/// »ñÈ¡´ËÏòÁ¿µÄÆ½·½´óĞ¡¡£
 		real squared_magnitude() const {
 			return x*x + y*y;
 		}
 		/// Turns a [[non-zero]] vector into a vector of unit length.
-		/// å°†ã€éé›¶ã€‘å‘é‡å•ä½åŒ–ã€‚
+		/// ½«¡¾·ÇÁã¡¿ÏòÁ¿µ¥Î»»¯¡£
 		void normalize() {
 			real l = magnitude();
 			if(l > 0) {
@@ -97,12 +97,12 @@ namespace chis {
 			}
 		}
 		/// Flips all the components of the vector.
-		/// ç¿»è½¬å‘é‡
+		/// ·­×ªÏòÁ¿
 		void invert() {
 			x = -x;
 			y = -y;
 		}
-	private:
+	//private:
 		/// Hold the value along the x axis
 		real x;
 		/// Hold the value along the y axis
