@@ -7,6 +7,7 @@ namespace chis {
 	* A Particle is the simplest object that can be simulated in the
 	* physics system.
 	**/
+
 	class Particle {
 	public:
 		Particle() :damping(0.995),inverse_mass(1) { }
@@ -30,6 +31,12 @@ namespace chis {
 		**/
 		void add_force(const Vector2d &f) {
 			force_accum += f;
+		}
+		bool has_infmass() {
+			if(zero(inverse_mass)) {
+				return true;
+			}
+			return false;
 		}
 		void set_position(Vector2d p) {
 			position = p;
@@ -72,7 +79,7 @@ namespace chis {
 			return inverse_mass;
 		}
 		real get_mass() const{
-			assert(!(zero(inverse_mass)));
+			//assert(!(zero(inverse_mass)));
 			return 1 / inverse_mass;
 		}
 	private:
