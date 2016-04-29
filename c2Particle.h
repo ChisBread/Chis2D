@@ -16,8 +16,21 @@ namespace chis {
 		* linear approximation of the correct integral. For this reason it
 		* may be inaccurate in some cases
 		**/
-		/// ½üËÆ»ý·Ö
 		void integrate(real duration);
+		/**
+		* Clears the forces applied to the particle. This will be
+		* called automatically after each integration step.
+		**/
+		void clear_accumulator();
+		/**
+		* Adds the given force to the particle, to be applied at the
+		* next iteration only
+		*
+		*@param force The force to apply
+		**/
+		void add_force(const Vector2d &f) {
+			force_accum += f;
+		}
 		void set_position(Vector2d p) {
 			position = p;
 		}

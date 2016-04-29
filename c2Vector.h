@@ -1,10 +1,7 @@
-#ifndef CHIS2D_MATH
-#define CHIS2D_MATH
+#ifndef CHIS2D_VECTOR
+#define CHIS2D_VECTOR
 #include <cmath>
-#define MAXN 1000
-#define offset 10000
 #define eps 1e-8
-#define PI 3.14159265358979323846//acos(-1.0)
 //判断一个数是否为0,是则返回true,否则返回false
 #define zero(x)(((x)>0?(x):-(x))<eps)
 //返回一个数的符号，正数返回1，负数返回2，否则返回0
@@ -31,6 +28,12 @@ namespace chis {
 		void operator-=(const Vector2d &v) {
 			x -= v.x;
 			y -= v.y;
+		}
+		Vector2d operator-(const Vector2d &v) const {
+			return Vector2d(x - v.x, y - v.y);
+		}
+		Vector2d operator+(const Vector2d &v) const {
+			return Vector2d(x + v.x, y + v.y);
 		}
 		/// Adds the given vecto to this, scaled by the given amount.
 		/// 加上一个以给定比例缩放的向量。
