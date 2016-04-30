@@ -38,4 +38,71 @@ namespace chis {
 		force *= -drag_coeff;
 		particle->add_force(force);
 	}
+	void Particle_spring::update_force(Particle *particle, real duration) {
+		// Calculate the vector of the spring.
+		Vector2d force;
+		force = particle->get_position();
+		force -= other->get_position();
+
+		// Calculate the magnitude of the force.
+		real magnitude = force.magnitude();
+		magnitude = rest_length - magnitude;
+		magnitude *= spring_constant;
+
+		// Calculate the final force and apply it.
+		force.normalize();
+		force *= magnitude;
+		particle->add_force(force);
+	}
+	void Particle_anchored_spring::update_force(Particle *particle, real duration) {
+		Vector2d force;
+		force = particle->get_position();
+		force -= *anchor;
+
+		// Calculate the magnitude of the force.
+		real magnitude = force.magnitude();
+		magnitude = magnitude - rest_length;
+		magnitude *= spring_constant;
+
+		// Calculate the final force and apply it.
+		force.normalize();
+		force *= -magnitude;
+		particle->add_force(force);
+	}
+	void Particle_bungee::update_force(Particle *particle, real duration) {
+		// Calculate the vector of the spring.
+		Vector2d force;
+		force = particle->get_position();
+		force -= other->get_position();
+
+		// Calculate the magnitude of the force.
+		real magnitude = force.magnitude();
+		if(magnitude <= rest_length) {
+			return;
+		}
+		magnitude = spring_constant*(rest_length - magnitude);
+
+		// Calculate the final force and apply it.
+		force.normalize();
+		force *= magnitude;
+		particle->add_force(force);
+	}
+	void Particle_anchored_bungee::update_force(Particle *particle, real duration) {
+		Vector2d force;
+		force = particle->get_position();
+		force -= *anchor;
+
+		// Calculate the magnitude of the force.
+		real magnitude = force.magnitude();
+		if(magnitude <= rest_length) {
+			return;
+		}
+		magnitude = magnitude - rest_length;
+		magnitude *= spring_constant;
+
+		// Calculate the final force and apply it.
+		force.normalize();
+		force *= -magnitude;
+		particle->add_force(force);
+	}
 }

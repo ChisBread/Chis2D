@@ -90,5 +90,91 @@ namespace chis {
 		**/
 		real k1, k2;
 	};
+	/**
+	* A force generator that applies a spring force.
+	**/
+	class Particle_spring :public Particle_force_generator {
+	public:
+		/**
+		* Creates a new spring with the given parameters.
+		**/
+		Particle_spring(Particle *other, 
+			real spring_constant, real rest_length) 
+			:other(other), spring_constant(spring_constant), rest_length(rest_length) { }
+		/**
+		* Applies the spring force to the given particle.
+		**/
+		virtual void update_force(Particle *particle, real duration);
+	private:
+		/// The particle at the other end of the spring.
+		Particle *other;
+		/// Holds the spring constant.
+		real spring_constant;
+		/// Holds the rest length of the spring.
+		real rest_length;
+	};
+	class Particle_anchored_spring : public Particle_force_generator {
+	public:
+		/**
+		* Creates a new spring with the given parameters.
+		**/
+		Particle_anchored_spring(Vector2d *anchor,
+			real spring_constant, real rest_length)
+			:anchor(anchor), spring_constant(spring_constant), rest_length(rest_length) { }
+		/**
+		* Applies the spring force to the given particle.
+		**/
+		virtual void update_force(Particle *particle, real duration);
+	private:
+		/// The location of the anchored end of the spring.
+		Vector2d *anchor;
+		/// Holds the spring constant.
+		real spring_constant;
+		/// Holds the rest length of the spring.
+		real rest_length;
+	};
+
+	class Particle_bungee : public Particle_force_generator {
+	public:
+		/**
+		* Creates a new spring with the given parameters.
+		**/
+		Particle_bungee(Particle *other,
+			real spring_constant, real rest_length)
+			:other(other), spring_constant(spring_constant), rest_length(rest_length) {
+		}
+		/**
+		* Applies the spring force to the given particle.
+		**/
+		virtual void update_force(Particle *particle, real duration);
+	private:
+		/// The particle at the other end of the spring.
+		Particle *other;
+		/// Holds the spring constant.
+		real spring_constant;
+		/// Holds the rest length of the spring.
+		real rest_length;
+	};
+	class Particle_anchored_bungee : public Particle_force_generator {
+	public:
+		/**
+		* Creates a new spring with the given parameters.
+		**/
+		Particle_anchored_bungee(Vector2d *anchor,
+			real spring_constant, real rest_length)
+			:anchor(anchor), spring_constant(spring_constant), rest_length(rest_length) {
+		}
+		/**
+		* Applies the spring force to the given particle.
+		**/
+		virtual void update_force(Particle *particle, real duration);
+	private:
+		/// The location of the anchored end of the spring.
+		Vector2d *anchor;
+		/// Holds the spring constant.
+		real spring_constant;
+		/// Holds the rest length of the spring.
+		real rest_length;
+	};
 }
 #endif

@@ -57,9 +57,30 @@ void gravity() {
 		}
 	}
 }
+void spring() {
+	Particle_force_registry pfr;
+	Particle p1, p2;
+	Particle_bungee psp1(&p2, 0.1, 50);
+	Particle_bungee psp2(&p1, 0.1, 50);
+	p2.set_position({ 20, 150 });
+	//p2.set_mass(0.5);
+	p1.set_position({ 71, 150 });
+	p1.set_velocity({ 0, 0 });
+	pfr.add(&p1, &psp1);
+	pfr.add(&p2, &psp2);
+	for(; is_run(); delay_fps(180)) {
+		pfr.update_force(1.0 / 10);
+		p1.integrate(1.0 / 30);
+		p2.integrate(1.0 / 30);
+		cleardevice();
+		line(p1.get_position().x, p1.get_position().y, p2.get_position().x, p2.get_position().y);
+		
+	}
+}
 int main() {
 	initgraph(800, 600);
-	gravity();
+	//gravity();
+	spring();
 	//drag();
 	getch();
 	closegraph();
