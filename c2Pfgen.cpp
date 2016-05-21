@@ -105,4 +105,31 @@ namespace chis {
 		force *= -magnitude;
 		particle->add_force(force);
 	}
+	void Particle_fake_spring::update_force(Particle *particle, real duration) {
+		//Check that we do not have infinite mass.
+		if(particle->has_infmass()) {
+			return;
+		}
+		// Calculate the relative position of the particle to anchor.
+		Vector2d position = particle->get_position();
+		position -= *anchor;
+
+		// Calculate the constants and check whether they are in bounds.
+		real gamma = 0.5 * std::sqrt(4 * spring_constant - damping*damping);
+		if(gamma == 0.0) {
+			return;
+		}
+		Vector2d c = position * (damping / (2.0 * gamma)) 
+			+ particle->get_velocity() * (1.0 / gamma);
+		// Calculate the target position.
+		Vector2d target = position * std::cos(gamma * duration)
+			+ c * std::sin(gamma * duration);
+		target *= std::exp(-0.5 * duration * damping);
+
+		// Calculate the resulting acceleration and thereforce the force.
+		Vector2d accel = (target - position) * (1.0 / (duration*duration)) 
+			- particle->get_velocity() * duration;
+		//accel.invert();
+		particle->add_force(accel * particle->get_mass());
+	}
 }

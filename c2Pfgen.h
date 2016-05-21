@@ -160,7 +160,7 @@ namespace chis {
 		/**
 		* Creates a new spring with the given parameters.
 		**/
-		Particle_anchored_bungee(Vector2d *anchor,
+		Particle_anchored_bungee(const Vector2d *anchor,
 			real spring_constant, real rest_length)
 			:anchor(anchor), spring_constant(spring_constant), rest_length(rest_length) {
 		}
@@ -170,11 +170,42 @@ namespace chis {
 		virtual void update_force(Particle *particle, real duration);
 	private:
 		/// The location of the anchored end of the spring.
-		Vector2d *anchor;
+		const Vector2d *anchor;
 		/// Holds the spring constant.
 		real spring_constant;
 		/// Holds the rest length of the spring.
 		real rest_length;
+	};
+	/**
+	* A force generator that fakes a stiff spring force, and where
+	* one end is attached to a fixed point in space.
+	**/
+	class Particle_fake_spring :public Particle_force_generator {
+	public:
+		/**
+		* Creates a new spring with the given parameters.
+		**/
+		Particle_fake_spring(const Vector2d *anchor,
+			real spring_constant, real damping)
+			:anchor(anchor), spring_constant(spring_constant), damping(damping) {
+		}
+		/**
+		* Applies the spring force to the given particle.
+		**/
+		virtual void update_force(Particle *particle, real duration);
+	private:
+		/**
+		* The location of the anchored end of the spring.
+		**/
+		const Vector2d *anchor;
+		/**
+		* Holds the spring constant.
+		**/
+		real spring_constant;
+		/**
+		* Holds the damping on the oscillation of the spring.
+		**/
+		real damping;
 	};
 }
 #endif
